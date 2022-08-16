@@ -1,17 +1,11 @@
 import "./App.css";
-import LifeCycle from "./components/LifeCycle";
-import { useState } from "react";
+import ReactBase from "./pages/ReactBase";
 
 function App() {
-  const [msg, setMsg] = useState("哈哈");
 
-  const changeMsg=()=>{
-    setMsg('666')
-  }
   return (
     <div className="App">
-      <LifeCycle msg={msg} />
-      <button onClick={changeMsg}>更新msg</button>
+      <ReactBase/>
     </div>
   );
 }

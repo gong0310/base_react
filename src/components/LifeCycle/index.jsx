@@ -5,12 +5,20 @@ class LifeCycle extends Component {
    * 挂载阶段：constructor -> getDerivedStateFromProps -> render -> componentDidMount
    * 更新阶段：getDerivedStateFromProps -> shouldComponentUpdate -> render -> getSnapshotBeforeUpdate -> componentDidUpdate
    * 卸载阶段：componentWillUnmount
+   * 捕获后代组件报错：componentDidCatch 统计错误发给后台
    */
   constructor(props) {
     super(props);
     console.log("constructor");
     this.state = {
       msg: "",
+    };
+  }
+  // 处理错误边界，把错误控制在一定范围之内
+  static getDerivedStateFromError(error){
+    console.log('如果当前组件的后代组件报错会调用，并返回一个对象来更新state')
+    return {
+      msg: error || '网络出错了',
     };
   }
   /**
@@ -35,6 +43,12 @@ class LifeCycle extends Component {
     return null;
   }
   shouldComponentUpdate(nextProps, nextState) {
+    /**
+     * 父组件更新，子组件必然更新，还有this.setState({})空对象，都会引起重新render,效率低，所以shouldComponentUpdate来了
+     * shouldComponentUpdate默认返回true渲染。
+     * PureComponent（纯组件，内部重写了ShouldComponentUpdate，自动帮我们处理了对比前后值来决定是否重新渲染）、hooks使用 React.memo都是类似功能
+     * 一般使用PureComponent
+     */
     console.log("ShouldComponentUpdate");
     // this.State是老值,所以可通过比较这两个是否一样，决定是否重新render
     console.log("nextProps,nextState=>", nextProps, nextState);

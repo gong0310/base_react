@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter as Router } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -8,12 +9,13 @@ import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <React.StrictMode>
-  // provider组件包裹在根组件App外层，目的是使APP所有的后代容器组件都可以接收到store。
-  <Provider store={store}>
-    <App />
-  </Provider>
-
+//   <React.StrictMode>
+    <Router>
+    {/*provider组件包裹在根组件App外层，目的是使APP所有的后代容器组件都可以接收到store。 */}
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Router>
   // </React.StrictMode>
 );
 

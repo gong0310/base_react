@@ -69,7 +69,16 @@ class Base extends Component {
         count: this.state.count + 1,
       },
       () => {
-        console.log("render后调用的回调=>", this.state.count); //2
+        console.log("render后调用的回调=>", this.state.count); //3
+      }
+    );
+    // 对象形式会覆盖上一个count+1，回调函数形式不会
+    this.setState(
+      {
+        count: this.state.count + 1,
+      },
+      () => {
+        console.log("render后调用的回调=>", this.state.count); //3
       }
     );
     console.log(this.state.count); // 0 还是原来的count
@@ -79,6 +88,13 @@ class Base extends Component {
         count: state.count + 1,
       };
     },()=>{});
+
+    this.setState((state,props) => {
+      return {
+        count: state.count + 1,
+      };
+    },()=>{ console.log("render后调用的回调=>", this.state.count); }); //3
+
     console.log(this.state.count); // 0 还是原来的count
   }
 

@@ -14,8 +14,14 @@ import React, {
 import Usereducers from './usereducer'
 /**
  * useCallback 记忆函数，类似useState，不会因为render重新定义方法(内部会缓存)，第一个参数是回调函数，第二个是不需要记忆的数据，跟useEffect类似
+ * useMemo 记忆组件 类似vue计算属性，第一个参数是返回一个回调函数，第二个是需要记忆的数据，跟useEffect类似
  * 
- * useMemo 记忆组件 类似vue计算属性，第一个参数是返回一个回调函数，第二个是不需要记忆的数据，跟useEffect类似
+ * useMemo  缓存的结果是回调函数中return回来的值，主要用于缓存计算结果的值，应用场景如需要计算的状态
+ * useCallback  缓存的结果是函数，主要用于缓存函数，
+ * useCallback 应用场景如有一个父组件，其中包含子组件，子组件接收一个函数作为props；通常而言，如果父组件更新了，子组件也会执行更新；但是大多数场景下，更新是没有必要的，
+ * 我们可以借助useCallback来返回函数，然后把这个函数作为props传递给子组件；这样，子组件就能避免不必要的更新
+ * 
+ * 注意： 不要滥用会造成性能浪费，react中减少render就能提高性能，所以这个仅仅只针对缓存能减少重复渲染时使用和缓存计算结果。
  * 
  * useState 适合定义一些单一的状态，useReducer 适合逻辑比较复杂的 state结构更清晰。
  * useReducer 用法跟redux一样
@@ -88,6 +94,15 @@ function Parent() {
   });
   //------------------------------------------
 
+  // const expensive = useMemo(() => {
+  //   console.log('compute');
+  //   let sum = 0;
+  //   for (let i = 0; i < count * 100; i++) {
+  //       sum += i;
+  //   }
+  //   return sum;
+  // })
+
   const addCount = () => {
     setCount(count + 1);
     console.log(count, countRef.current, countRef2.current);
@@ -95,6 +110,7 @@ function Parent() {
 
   return (
     <Fragment>
+      {/* {expensive()} */}
       <h2 ref={countRef2}>HOOkS</h2>
       {count}
       <button onClick={addCount} ref={countRef}>

@@ -13,6 +13,8 @@ import React, {
 } from "react";
 import Usereducers from './usereducer'
 /**
+ * 复用性更强、代码更整洁、可维护性更强
+ * 
  * useCallback 记忆函数，类似useState，不会因为render重新定义方法(内部会缓存)，第一个参数是回调函数，第二个是不需要记忆的数据，跟useEffect类似
  * useMemo 记忆组件 类似vue计算属性，第一个参数是返回一个回调函数，第二个是需要记忆的数据，跟useEffect类似
  * 
@@ -61,7 +63,8 @@ function Parent() {
    * 手动更改真实DOM
    */
   /**
-   * useLayoutEffect和原来componentDidMount&componentDidUpdate一致，在react完成DOM更新后(未渲染)马上同步调用的代码(可以做dom操作)，会阻塞页面渲染，
+   * useLayoutEffect和原来componentDidMount&componentDidUpdate一致，在react完成DOM更新后，浏览器绘制之前执行。马上同步调用的代码(可以做dom操作)，会阻塞页面渲染，
+   * 官方建议优先使用useEffect
    * 
    * 而useEffect是会在整个页面渲染完才会调用的代码。
    */

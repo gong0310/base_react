@@ -15,7 +15,11 @@ import Usereducers from './usereducer'
 /**
  * 复用性更强、代码更整洁、可维护性更强
  * 
- * useCallback 记忆函数，类似useState，不会因为render重新定义方法(内部会缓存)，第一个参数是回调函数，第二个是不需要记忆的数据，跟useEffect类似
+ * useCallback 记忆/缓存函数，类似useState，不会因为render重新定义方法(内部会缓存)，第一个参数是回调函数，
+ * 第二个是不需要记忆的数据决定返回新的函数还是旧的函数，跟useEffect类似
+ * useCallBack在什么情况下使用？
+   在往子组件传入了一个函数并且子组件被React.momo缓存了的时候使用
+
  * useMemo 记忆组件 类似vue计算属性，第一个参数是返回一个回调函数，第二个是需要记忆的数据，跟useEffect类似
  * 
  * useMemo  缓存的结果是回调函数中return回来的值，主要用于缓存计算结果的值，应用场景如需要计算的状态

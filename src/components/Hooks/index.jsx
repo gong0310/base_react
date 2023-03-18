@@ -53,7 +53,8 @@ function Parent() {
   /**
    * 功能与React.createRef()一样，区别：
    * 1、useRef是use hooks的一种，一般用于function组件，而createRef一般用于class组件；
-   * 2、useRef创建的ref对象在组件的整个生命周期内都不会改变，但是由createRef创建的ref对象，弊端(组件每次更新，ref对象就会被重新创建)。
+   * 2、useRef创建的ref对象在组件的整个生命周期内都不会改变,返回的是同一个引用，但是由createRef创建的ref对象，弊端(组件每次更新，ref对象就会被重新创建)。
+   * 3、不能在函数式组件上使用ref属性，因为他们没有实例。需要使用hook useImperativeHandle 配合forwardRef使用实现子组件内部属性在父组件中调用
    */
   //------------------------------------------
   /**

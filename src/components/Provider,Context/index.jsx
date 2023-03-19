@@ -74,6 +74,7 @@ const A = (props) => {
 /**
  * 都是类似vue插槽技术(不会写死预留组件，更灵活)：
  * render props，可以在A组件预留一个位置，并且把数据传给预留组件(vue作用域插槽)
+ * 将一个组件内的state作为props传递给子组件
  * props.children 可以在A组件预留一个位置，但不能把数据传给预留组件(vue默认插槽)
  */
 const B = (props) => {

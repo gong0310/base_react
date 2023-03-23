@@ -11,7 +11,8 @@ import React, {
   useMemo,
   useReducer,
 } from "react";
-import Usereducers from './usereducer'
+import Usereducers from "./usereducer";
+import useFetch from "./usefeatch";
 /**
  * 复用性更强、代码更整洁、可维护性更强
  * 
@@ -70,11 +71,19 @@ function Parent() {
   /**
    * useLayoutEffect和原来componentDidMount&componentDidUpdate一致，在react完成DOM更新后，浏览器绘制之前执行。马上同步调用的代码(可以做dom操作)，会阻塞页面渲染，
    * 官方建议优先使用useEffect
-   * 
+   *
    * 而useEffect是会在整个页面渲染完才会调用的代码。
    */
+
+  const { result, loading, beginFetch } = useFetch(
+    "http://localhost:3000/1.json"
+  );
+  console.log("=======", result, loading);
+
+
   useEffect(() => {
     console.log("componentDidMount/componentDidUpdate");
+
     // 正确请求方法
     // async function initData() {
     // 	const res = await getData('url');
@@ -113,6 +122,7 @@ function Parent() {
 
   const addCount = () => {
     setCount(count + 1);
+    beginFetch()
     console.log(count, countRef.current, countRef2.current);
   };
 
@@ -127,15 +137,15 @@ function Parent() {
       <CountContext.Provider value={count}>
         <Child />
       </CountContext.Provider>
-      <Usereducers/>
+      <Usereducers />
     </Fragment>
   );
 }
 export default Parent;
 const Counter = () => {
-    /**
-     * useContext比Consumer方便，降低代码复杂度
-     */
+  /**
+   * useContext比Consumer方便，降低代码复杂度
+   */
   const count = useContext(CountContext);
   return <p>useContext祖孙收到数据：{count}，比Consumer方便，降低代码复杂度</p>;
 };
